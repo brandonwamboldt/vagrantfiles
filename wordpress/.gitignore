@@ -1,0 +1,60 @@
+# We don't want to store WordPress in our Git repository
+/app/wp-admin/
+/app/wp-content/backups/
+/app/wp-content/backup-db/
+/app/wp-content/blogs.dir/
+/app/wp-content/cache/
+/app/wp-content/themes/twentythirteen/
+/app/wp-content/upgrade/
+/app/wp-content/advanced-cache.php
+/app/wp-content/wp-cache-config.php
+/app/wp-includes/
+/app/index.php
+/app/license.txt
+/app/readme.html
+/app/wp-activate.php
+/app/wp-blog-header.php
+/app/wp-comments-post.php
+/app/wp-config-sample.php
+/app/wp-cron.php
+/app/wp-links-opml.php
+/app/wp-load.php
+/app/wp-login.php
+/app/wp-mail.php
+/app/wp-settings.php
+/app/wp-signup.php
+/app/wp-trackback.php
+/app/xmlrpc.php
+
+# Google Sitemaps
+sitemap.xml
+sitemap.xml.gz
+
+# Log files
+*.log
+*.log.gz
+*.log.bz2
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# IDE files
+.idea/
+*.sublime-workspace
+
+# We don't want to store user uploads in our repository either, or we will
+# constantly be out of date as users upload files.
+/app/wp-content/uploads/*
+!/app/wp-content/uploads/.gitkeep
+
+# You shouldn't store config files in version control either, as your database
+# credentials would be permanently stored. You should store example configs that
+# you can rename and add your creds to.
+/app/wp-config.php
