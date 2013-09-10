@@ -1,0 +1,22 @@
+{
+  "author": "Your Name <your-name@example.com>",
+  "name": "untitled-project",
+  "description": "<description of your project>",
+  "version": "0.0.1",
+  "homepage": "http://example.com/",
+  "engines": {
+    "node": "~0.10.13"
+  },
+  "dependencies": {
+    "async"   : "0.2.x",
+    "lodash"  : "1.3.x",
+    "request" : "2.27.x",
+    "ejs"     : "0.8.x",
+    "express" : "3.3.x"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-clean": "0.5.x",
+    "grunt-nodemon": "0.1.x"
+  }
+}
