@@ -25,3 +25,8 @@ Nodemon
 -------
 
 We use nodemon to monitor your project for changes and automatically restart node. We do this using the grunt task, `grunt server`. Nodemon is used in legacy mode because of a bug with VirtualBox/VMWare shared folders.
+
+How Do I Use Vagrant
+--------------------
+
+See our [guide on using Vagrant](docs/Vagrant.md).

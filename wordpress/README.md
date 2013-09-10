@@ -22,3 +22,8 @@ Project Structure
 The majority of your code including WordPress is in the `app/` folder. The top level folder is reserved for tools and configs, like your `Vagrantfile`, `composer.json`, `Gruntfile.js`, `package.json` files, etc.
 
 All WordPress files are excluded from Git using a `.gitignore` file (files that are part of WordPress core).
+
+How Do I Use Vagrant
+--------------------
+
+See our [guide on using Vagrant](docs/Vagrant.md).
