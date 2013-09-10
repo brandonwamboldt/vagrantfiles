@@ -3,11 +3,11 @@ ExpressJS Starter Template
 
 This is a Vagrant starter template for Node.js/Express websites. The following items are setup/installed:
 
-* Node.js 0.10.18
-* Express 3.3
-* Async.js, Lodash, Request.js
-* Grunt
-* Nodemon
+* [Node.js 0.10.18](http://nodejs.org/)
+* [Express 3.3](http://expressjs.com/)
+* [Async](https://github.com/caolan/async), [Lodash](https://github.com/lodash/lodash), [Request](https://github.com/mikeal/request)
+* [Grunt](http://gruntjs.com/)
+* [Nodemon](https://github.com/remy/nodemon)
 
 Setup
 -----
@@ -20,3 +20,8 @@ Project Structure
 The majority of your code is in the `app/` folder. The top level folder is reserved for tools and configs, like your `Vagrantfile`, `package.json`, `Gruntfile.js` files, etc.
 
 Node modules are excluded from Git by default.
+
+Nodemon
+-------
+
+We use nodemon to monitor your project for changes and automatically restart node. We do this using the grunt task, `grunt server`. Nodemon is used in legacy mode because of a bug with VirtualBox/VMWare shared folders.
