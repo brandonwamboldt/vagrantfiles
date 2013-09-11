@@ -98,6 +98,12 @@ service { 'mysql':
   require => Package['mysql-server'],
 }
 
+exec { 'Drop anonymous MySQL users':
+  require  => Package['mysql-server'],
+  command  => '/bin/echo "DELETE FROM mysql.user WHERE User = \'\'" | /usr/bin/mysql -u root',
+  onlyif   => "/usr/bin/mysql -u root -e \"SELECT User FROM mysql.user WHERE User LIKE ''\" | /bin/grep 'User'",
+}
+
 # Install PHP and required PHP extensions
 
 package { 'php5':
