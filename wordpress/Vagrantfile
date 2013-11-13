@@ -10,6 +10,9 @@ Vagrant.configure("2") do |config|
 
   # Map port 5001 on the host machine to port 8000 on the guest (phpMyAdmin)
   config.vm.network :forwarded_port, guest: 8000, host: 5001
+  
+  # Map the guest to a private network address
+  config.vm.network "private_network", ip: "10.14.14.14"
 
   # Map the repository folder to /var/www/html/wordpress as well as /vagrant
   config.vm.synced_folder "./", "/var/www/html/wordpress"
