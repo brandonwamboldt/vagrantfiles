@@ -1,0 +1,125 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          varnish-agent
+# Required-Start:    $local_fs $remote_fs $network
+# Required-Stop:     $local_fs $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Varnish Agent
+# Description:       Provides REST interface for Varnish
+### END INIT INFO
+
+# Source function library
+. /lib/lsb/init-functions
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+DESC="Varnish Agent"
+NAME=varnish-agent
+DAEMON=/usr/bin/$NAME
+PIDFILE=/var/run/$NAME.pid
+
+# Exit if the package is not installed
+test -x $DAEMON || exit 0
+
+# Read configuration variable file if it is present
+if [ -f /etc/default/$NAME ] ; then
+        . /etc/default/$NAME
+fi
+
+# Make sure the tmpfs directory exists
+if [ ! -d /var/run/varnish ] ; then
+    mkdir /var/run/varnish
+fi
+
+start_vagent() {
+    log_daemon_msg "Starting $DESC" "$NAME"
+    output=$(/bin/tempfile -s.varnish)
+    if start-stop-daemon \
+        --start --quiet --pidfile ${PIDFILE} --exec ${DAEMON} -- \
+        -P ${PIDFILE} ${DAEMON_OPTS} > ${output} 2>&1; then
+        log_end_msg 0
+    else
+        log_end_msg 1
+        cat $output
+        exit 1
+    fi
+    rm $output
+}
+
+do_start()
+{
+    log_daemon_msg "Starting $DESC" "$NAME"
+    output=$(/bin/tempfile -s.vagent)
+    if start-stop-daemon --start --quiet --pidfile ${PIDFILE} --exec ${DAEMON} -- \
+        -P ${PIDFILE} ${DAEMON_OPTS} > ${output} 2>&1; then
+        log_end_msg 0
+    else
+        log_end_msg 1
+        cat $output
+        exit 1
+    fi
+    rm $output
+}
+
+stop_vagent()
+{
+    log_daemon_msg "Stopping $DESC" "$NAME"
+    if start-stop-daemon \
+        --stop --quiet --pidfile $PIDFILE --retry 10 \
+        --exec $DAEMON; then
+        log_end_msg 0
+    else
+        log_end_msg 1
+    fi
+
+    if test -r $PIDFILE; then
+        read -r PID < $PIDFILE
+        if test ! -d /proc/$PID ; then
+            # stale pidfile
+            unset PID
+            rm -f $PIDFILE
+        fi
+    fi
+}
+
+reload_vagent() {
+    log_daemon_msg "Reloading $DESC" "$NAME"
+    start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name $NAME
+    log_end_msg 0
+}
+
+status_vagent() {
+    if [ -f $PIDFILE ]; then
+        status_of_proc -p $PIDFILE "/usr/local/bin/varnish-agent" "Varnish Agent 2" && exit 0 || exit $?
+    else
+        log_failure_msg "Varnish Agent 2 is stopped..."
+        exit 3
+    fi
+}
+
+case "$1" in
+    start)
+        start_vagent
+        ;;
+    stop)
+        stop_vagent
+        ;;
+    reload)
+        reload_vagent
+        ;;
+    status)
+        status_vagent
+        ;;
+    restart|force-reload)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        log_success_msg "Usage: $0 {start|stop|status|reload|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0

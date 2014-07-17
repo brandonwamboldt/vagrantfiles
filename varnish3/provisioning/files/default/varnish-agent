@@ -1,0 +1,10 @@
+# Should we start varnish-agent at boot? Set to "no" to disable.
+START=yes
+
+# Pass these arguments to the daemon when starting
+DAEMON_OPTS="-K /etc/varnish/agent_secret \
+             -H /var/www/dashboard \
+             -S /etc/varnish/secret \
+             -u root \
+             -g root \
+             -T localhost:2000"
