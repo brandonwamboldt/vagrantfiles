@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   # Assign a private IP address to the guest
-  core.vm.network "private_network", ip: "10.7.12.4"
+  config.vm.network "private_network", ip: "10.7.12.4"
 
   # Customize the guest
   config.vm.provider "virtualbox" do |vb|

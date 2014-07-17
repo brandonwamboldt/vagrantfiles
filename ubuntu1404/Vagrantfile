@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty32"
 
   # Assign a private IP address to the guest
-  core.vm.network "private_network", ip: "10.7.14.4"
+  config.vm.network "private_network", ip: "10.7.14.4"
 
   # Customize the guest
   config.vm.provider "virtualbox" do |vb|
