@@ -1,0 +1,30 @@
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "precise32"
+
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+  # Assign a private IP address to the guest
+  core.vm.network "private_network", ip: "10.7.12.4"
+
+  # Customize the guest
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--name", "Ubuntu 12.04 Sandbox"]
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+  end
+
+  # Needs to be run before the main puppet manifest
+  config.vm.provision :shell, :inline => "sudo puppet apply /vagrant/provision.pp"
+
+  # Fix "stdin: is not a tty" message
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+end
