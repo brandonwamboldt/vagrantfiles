@@ -1,55 +1,29 @@
-# We're using Ubuntu 12.04, but we want to use the repos from 13.04
-
-file { '/etc/apt/sources.list':
-  ensure => 'present',
-  target => '/vagrant/vagrant/puppet/apt/sources.list',
-  notify => [Exec['Import Aptitude GPG keys'], Exec['Update Aptitude sources to use Raring Ringtail sources']],
-}
-
-exec { 'Import Aptitude GPG keys':
-  command     => '/usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3B4FE6ACC0B21F32',
-  require     => File['/etc/apt/sources.list'],
-  refreshonly => true,
-}
-
-exec { 'Update Aptitude sources to use Raring Ringtail sources':
-  command     => '/usr/bin/apt-get update',
-  require     => Exec['Import Aptitude GPG keys'],
-  refreshonly => true,
-}
-
 # Misc. dependencies
 
 package { 'curl':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 package { 'wget':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 package { 'build-essential':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 package { 'git':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 package { 'unzip':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 # Setup Apache
 
 package { 'apache2':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 service { 'apache2':
@@ -89,7 +63,6 @@ file { 'Enable mod_rewrite':
 
 package { 'mysql-server':
   ensure  => 'present',
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
 service { 'mysql':
@@ -109,21 +82,57 @@ exec { 'Drop anonymous MySQL users':
 package { 'php5':
   ensure  => 'present',
   notify  => Service['apache2'],
-  require => Exec['Update Aptitude sources to use Raring Ringtail sources'],
 }
 
-package { 'php5-extensions':
-  name    => [
-    'php-pear',
-    'php5-cli',
-    'php5-curl',
-    'php5-dev',
-    'php5-intl',
-    'php5-gd',
-    'php5-mcrypt',
-    'php5-memcache',
-    'php5-mysql'
-  ],
+package { 'php-pear':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-cli':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-curl':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-dev':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-intl':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-gd':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-mcrypt':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-memcache':
+  ensure  => 'present',
+  notify  => Service['apache2'],
+  require => Package['php5'],
+}
+
+package { 'php5-mysql':
   ensure  => 'present',
   notify  => Service['apache2'],
   require => Package['php5'],
