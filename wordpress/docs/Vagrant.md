@@ -24,7 +24,7 @@ Spinning Up Your VM
 phpMyAdmin
 ----------
 
-phpMyAdmin is installed at port 5001, and can be accessed via `http://localhost:11001`.
+phpMyAdmin is installed at port 5001, and can be accessed via `http://localhost:5001`.
 
 SSH Access
 ----------
